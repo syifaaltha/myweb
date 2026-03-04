@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Biodata</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #74ebd5, #9face6);
+        }
+        .container {
+            width: 400px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            text-align: center;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .hasil {
+            margin-top: 15px;
+            background: #e7f3ff;
+            padding: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Form Biodata</h2>
+
+    <form id="biodataForm">
+        <label>Nama Lengkap</label>
+        <input type="text" id="nama" required>
+
+        <label>Kelas</label>
+        <input type="text" id="kelas" required>
+
+        <label>Alamat</label>
+        <textarea id="alamat" required></textarea>
+
+        <label>Tanggal Lahir</label>
+        <input type="date" id="tanggal_lahir" required>
+
+        <button type="submit">Simpan</button>
+    </form>
+
+    <div id="output"></div>
+</div>
+
+<script>
+document.getElementById("biodataForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let nama = document.getElementById("nama").value;
+    let kelas = document.getElementById("kelas").value;
+    let alamat = document.getElementById("alamat").value;
+    let tanggal_lahir = document.getElementById("tanggal_lahir").value;
+
+    // Hitung umur
+    let today = new Date();
+    let birthDate = new Date(tanggal_lahir);
+    let umur = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        umur--;
+    }
+
+    document.getElementById("output").innerHTML = `
+        <div class="hasil">
+            <h3>Data Biodata</h3>
+            <p><strong>Nama:</strong> ${nama}</p>
+            <p><strong>Kelas:</strong> ${kelas}</p>
+            <p><strong>Alamat:</strong> ${alamat}</p>
+            <p><strong>Tanggal Lahir:</strong> ${tanggal_lahir}</p>
+            <p><strong>Umur:</strong> ${umur} tahun</p>
+        </div>
+    `;
+});
+</script>
+
+</body>
+</html>
